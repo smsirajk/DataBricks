@@ -1,0 +1,32 @@
+#partition based on Deptno
+
+#  
+  from pyspark.sql.functions import col,lit
+# File location and type
+file_location = "/FileStore/tables/emp.csv"
+file_type = "csv"
+
+# CSV options
+infer_schema = "true"
+first_row_is_header = "true"
+delimiter = ","
+
+# The applied options are for CSV files. For other file types, these will be ignored.
+df_part = spark.read.format(file_type) \
+  .option("inferSchema", infer_schema) \
+  .option("header", first_row_is_header) \
+  .option("sep", delimiter) \
+  .load(file_location)
+
+display(df_part)
+
+df_part.printSchema()
+
+# Save after partition creation    
+df_part.write.format("parquet").partitionBy("deptno").mode("overwrite").save("/FileStore/tables/dept_part")
+
+# Check the datacount after partition has created    
+%sql
+
+select count(*) from parquet.`/FileStore/tables/dept_part/deptno=10/part-00000-tid-941636378348932357-e6e11c47-53fe-464e-b3a4-6eced376a7de-5-1.c000.snappy.parquet`;    
+
