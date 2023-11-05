@@ -1,0 +1,20 @@
+#How to use WHEN Otherwise in PySpark
+from pyspark.sql.functions import col,lit,when
+
+df_3=df_2.withColumn("State",when(col("city")=="WB","West Bengal").when(col("city")=="KA","Karnataka").when(col("city")=="MP","Madhya Pradesh").otherwise("Unknown"))
+
+df_3.show()
+
+# specific column or all columns with alias
+
+df_4=df_2.select(when(col("city")=="WB","West Bengal").when(col("city")=="KA","Karnataka").otherwise("Unknown").alias("State"))
+
+df_4.show()
+
+df_5=df_2.select(col("*"),when(col("city")=="WB","West Bengal").when(col("city")=="KA","Karnataka").otherwise("Unknown").alias("State"))
+
+df_5.show()
+
+df_6=df_2.select(col("Stud_name"),when(col("city")=="WB","West Bengal").when(col("city")=="KA","Karnataka").otherwise("Unknown").alias("State"))
+
+df_6.display()
