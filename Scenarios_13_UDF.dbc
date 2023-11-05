@@ -1,0 +1,57 @@
+#How to create UDF
+# Data preparation
+from pyspark.sql.functions import lit
+
+sample=[(1,"Mustafa","BS","WB",40), \
+        (2,"Mustak","CSE","KA",50), \
+        (3,"Badsha","EC","KOL",60), \
+        (4,"Neel","CS","RA",55)
+    ]
+
+columns=["ID","Stud_name","Dept_name","City","Marks"]
+
+df1=spark.createDataFrame(data=sample,schema=columns)
+
+sample1=[(5,"Minnat","BSC","HW"), \
+        (6,"Mieshaa","CSE","KA"), \
+        (7,"Meenhaz","EC","KOL") 
+    ]
+
+columns=["ID","Stud_name","Dept_name","City"]
+df2=spark.createDataFrame(data=sample1,schema=columns)
+
+df1.show()
+df2.show()
+
+df2=df2.withColumn("Marks",lit("null"))
+df=df1.union(df2)
+df.show()
+
+
+#create function, string conversion  
+
+  def convertCase(str_value):
+    stage=""
+    for i in str_value:
+        if ('a'<=i<='z'):
+            stage=stage+i.upper()
+        else:
+            stage=stage+i.lower()
+    return stage
+
+  #Register and call the UDF
+
+
+from pyspark.sql.functions import col,udf
+convert_udf=udf(convertCase)
+df.select(col("ID"),convert_udf(col("Stud_name")).alias("Student_name"),convert_udf(col("City")).alias("City")).show()
+
+
+#How to Register the UDF funtion
+spark.udf.register("convert_case",convert_udf)      
+
+#After register, call it from SQL
+
+%sql
+select convert_case(ENAME) as lower_name from emp;
+
