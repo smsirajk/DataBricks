@@ -1,0 +1,11 @@
+#Filter condition
+
+df.filter(df.Deptno==20).show()
+
+df2.filter(col("Deptno")==10).show()
+
+# or condition
+df2.filter((col("Deptno")==20) | (col("Dname")=="SALES")).show()
+#df2.filter(col("Dname")=="SALES").show()
+
+df2.filter((col("Deptno")==20) & (col("Dname")=="RESEARCH")).show()
