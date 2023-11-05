@@ -1,0 +1,17 @@
+#How to join two DataFrames in PySpark
+
+df_1.show()
+
+df_1.join(df_2, df_1.Stud_name == df_2.Stud_name, "right").show()
+
+# with Alias during join condition
+
+df_1.alias("a").join(df_2.alias("b"),col("a.Stud_name")==col("b.Stud_name"),"inner").show()
+
+#Select specific columns not all
+
+df_1.alias("a").join(df_2.alias("b"),col("a.Stud_name")==col("b.Stud_name"),"left").select(col("a.Stud_name"),col("b.Dept"),col("b.Marks")).show()
+
+#with Alias
+
+df_1.alias("a").join(df_2.alias("b"),col("a.Stud_name")==col("b.Stud_name"),"right").select(col("a.Stud_name").alias("Student_name"),col("b.Dept").alias("B_dept"),col("b.Marks").alias("B_Marks")).show()
