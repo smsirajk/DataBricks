@@ -1,0 +1,12 @@
+#Sort or order by
+
+
+df.sort(df.Dname).show()
+
+df.sort(df.Location.desc()).show()
+
+#Multiple column sorting when both one item belongs from same category, based on other category it will sort again
+
+df.orderBy(df.Deptno.desc(),df.Dname).show()
+
+df2.orderBy(col("Deptno").desc(),col("Location").asc()).show()
