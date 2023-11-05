@@ -1,0 +1,24 @@
+# Column added/Renaming 
+
+df.printSchema()
+
+temp_table_name = "dept"
+
+df.createOrReplaceTempView(temp_table_name)
+
+df=df.withColumnRenamed("Loc","Location")
+
+df2=df.select(col("Deptno").alias("Department"),col("Dname"),col("Location"))
+df2.show()
+
+#added new column
+
+df=df.withColumn("Country",lit("India"))
+df.show()
+
+df3=df.withColumn("Salary",lit(10000))
+df3=df3.withColumn("Salary",col("Deptno")*col("Salary"))
+df3.show()
+
+df4=df.select(col("Deptno"),col("Dname").alias("Dept_name"),lit("India").alias("Country"))
+df4.show()
