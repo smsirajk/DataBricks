@@ -1,0 +1,13 @@
+#How to delete duplicate records 
+import pandas as pd
+
+data=spark.createDataFrame([[1,"Mustafa",1000],[2,"Mustak",3000],[3,"Mustoza",4000],[4,"Minnat",4500],[1,"Raju",1000],[1,"Mustafa",5000],[6,"Mieshaa",8000]],["id","Name","Salary"])
+data.show()
+
+data.printSchema()
+
+data1=data.distinct()
+
+data1.display()
+
+data1.dropDuplicates(["id","Name"]).show()
