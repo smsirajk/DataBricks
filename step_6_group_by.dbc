@@ -1,0 +1,13 @@
+from pyspark.sql.functions import sum,avg,max,min
+from pyspark.sql.functions import col,lit
+data=spark.createDataFrame([[1,"Mustafa",1000],[2,"Mustak",3000],[3,"Mustoza",4000],[4,"Minnat",4500],[6,"Mieshaa",1000],[1,"Mustafa",5000],[6,"Mieshaa",8000]],["id","Name","Salary"])
+data.show()
+data.printSchema()
+
+data=data.groupBy('id').max('Salary').alias('Highest_salary')  #alias no support
+data.show()
+
+data=data.groupBy('id').aggregate(max('Salary'),min('Salary'),sum('Salary'))
+data.show()
+ 
+data=data.groupBy('id').agg(max('Salary').alias("Max_sal"),min('Salary').alias("min_sal"),sum('Salary').alias("Sum_sal")) 
