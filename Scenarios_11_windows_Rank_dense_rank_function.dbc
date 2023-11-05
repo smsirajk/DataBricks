@@ -1,0 +1,27 @@
+# Windows function/Analytical function using
+# row_number()
+#rank()
+#Dense_rank()
+#Lag()
+#Lead()
+from pyspark.sql.window import Window
+from pyspark.sql.functions import *
+
+df_5=df_1.union(df_2)
+df_5.show()
+df_5.withColumn
+window=Window.partitionBy("Stud_name").orderBy("Marks")
+df_5.withColumn("r1",row_number().over(window)).show()
+
+window1=Window.partitionBy().orderBy("Marks")
+df_5.withColumn("r1",row_number().over(window1)).show()
+
+#Decending order marks
+
+window2=Window.partitionBy().orderBy(col("Marks").desc())
+df_5.withColumn("r1",row_number().over(window2)).show()
+
+
+window2=Window.partitionBy().orderBy(col("Marks").desc())
+df_5.withColumn("r1",row_number().over(window2)).select(col("Stud_name"),col("r1").alias("Rank")).show()
+
