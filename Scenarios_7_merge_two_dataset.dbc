@@ -1,0 +1,25 @@
+#How to merge two DataFrame using PySpark
+
+sample=[("Sagar","CBSC","WB",80,),\
+    ("Raju","IT","MP",86,),\
+    ]
+
+columns=["Stud_name","Dept","city","Marks"]
+df_1=spark.createDataFrame(data=sample, schema=columns)
+
+df_1.show()
+
+
+sample1=[("Sagar","CBSC","WB",80,),\
+    ("Raja","EC","KA",87,),\
+    ]
+
+columns=["Stud_name","Dept","city","Marks"]
+df_2=spark.createDataFrame(data=sample1, schema=columns)
+
+df_2.show()
+
+# same structure and data type
+
+df_2=df_1.union(df_2).distinct()
+df_2.show()
