@@ -1,0 +1,6 @@
+#How to Wrtie into CSV
+
+df.show()
+data.show()
+df.write.csv("/FileStore/tables_output/dept_save.csv")
+#"/FileStore/tables/dept-3.csv"
